@@ -9,6 +9,7 @@
  */
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
 use Drupal\Core\Url;
 
 /**
@@ -32,18 +33,19 @@ function tribute_form_system_theme_settings_alter(&$form, FormStateInterface $fo
   // Library settings
   if (\Drupal::moduleHandler()->moduleExists('bootstrap_library')) {
     $form['tribute_library'] = array(
-      '#type' => 'select',
-      '#title' => t('Load library'),
-      '#description' => t('Select how to load the Bootstrap Library.'),
-      '#default_value' => theme_get_setting('tribute_library'),
-      '#options' => array(
-        'cdn' => t('CDN'),
-        'development' => t('Local non minimized (development)'),
-        'production' => t('Local minimized (production)'),
-      ),
-      '#empty_option' => t('None'),
-      '#description' => t('If none is selected you should load the library via Bootstrap Library or manually. If CDN is selected, the library version must be configured on @boostrap_library_link',  array('@bootstrap_library_link' => Drupal::l('Bootstrap Library Settings' , Url::fromRoute('bootstrap_library.admin')))),
-    );
+  '#type' => 'select',
+  '#title' => t('Load library'),
+  '#default_value' => theme_get_setting('tribute_library'),
+  '#options' => array(
+    'cdn' => t('CDN'),
+    'development' => t('Local non minimized (development)'),
+    'production' => t('Local minimized (production)'),
+  ),
+  '#empty_option' => t('None'),
+  '#description' => t('Select how to load the Bootstrap Library. If none is selected you should load the library via Bootstrap Library or manually. If CDN is selected, the library version must be configured on @bootstrap_library_link', array(
+    '@bootstrap_library_link' => Link::fromTextAndUrl(t('Bootstrap Library Settings'), Url::fromRoute('bootstrap_library.admin'))->toString(),
+  )),
+);
   }
 
 
